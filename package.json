@@ -1,0 +1,26 @@
+{
+  "name": "stock8",
+  "version": "1.0.0",
+  "description": "\"# stockwatch\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && yarn start",
+    "server":"cd backend && yarn dev",
+    "both": "concurrently \"yarn server\"  \"yarn client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-hyphen-user/stockwatch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/The-hyphen-user/stockwatch/issues"
+  },
+  "homepage": "https://github.com/The-hyphen-user/stockwatch#readme",
+  "dependencies": {
+    "concurrently": "^7.2.2"
+  }
+}

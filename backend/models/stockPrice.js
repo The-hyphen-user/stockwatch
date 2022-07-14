@@ -2,20 +2,14 @@ const sequelize = require('../util/database')
 var Sequelize = require('sequelize');
 const { DataTypes } = Sequelize;
 
-const stocks = sequelize.define('stocks', {
+const stockPrice = sequelize.define('stockPrice', {
     symbol: {
         type: DataTypes.STRING(20),
         primaryKey: true,
         allowNull: false
     },
-    description: {
-        type: DataTypes.STRING(100)
-    },
-    type:{
-        type:DataTypes.STRING(100)
-    },
-    currency: {
-        type: DataTypes.STRING(10)
+    price: {
+        type: DataTypes.FLOAT(9, 2)
     }
 },
     {
@@ -24,4 +18,4 @@ const stocks = sequelize.define('stocks', {
     });
 
 
-    module.exports = stocks;
+    module.exports = stockPrice;

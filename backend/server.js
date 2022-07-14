@@ -38,10 +38,10 @@ user.sync({force:true}).then(() => {
 }
 
 
-const {userSync, stocksSync, userStocksSync} = require('./sync');
+//const {userSync, stocksSync, userStocksSync} = require('./sync');
 
 //userSync();
-stocksSync
+//stocksSync
 
 
 

@@ -9,7 +9,7 @@ dotenv.config();
 
 router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body//needs validation
-    
+
     console.log('submitting, Email: ', email)
     const dupUser = await user.findOne({ attributes: ['id', 'email', 'password'], where: { email } });
     if (dupUser) {
@@ -22,7 +22,18 @@ router.post('/signup', async (req, res) => {
             if (!newUser) {
                 return res.status(500).send('Something went wrong');
             }
-            res.status(201).send('User was created!');
+            const login = {
+                email,
+                password
+            }
+            const secretKey = process.env.SECRET_JWT;
+    
+            const loginToken = jwt.sign({ login: login }, secretKey, {//swap to user not just id
+                expiresIn: '24h'
+            });
+            res.send({ login: loginToken });
+
+            //res.status(201).send('User was created!');
 
         }
     }

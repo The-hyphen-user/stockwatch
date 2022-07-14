@@ -3,14 +3,17 @@ const router = express.Router();
 const signup = require('../api/signup')
 const login = require('../api/login')
 const api = require('../api')
-const auth = require('../middleware/auth')
+const {auth, auth2} = require('../middleware/auth')
 const userPage = require('../api/userPage')
+const stock = require('../api/stock')
 
 
 
 router.use('/api', api)
 //router.post('/api', signup)
-router.get('/protected', auth(), )
-router.get('/user:user', auth(), userPage)
+//router.get('/protected', auth() )
+//router.get('/user:user', auth2(), userPage)
+router.get('/user:user', auth2(), userPage)
+router.get('/stocks:symbol', stock)
 
 module.exports = router;

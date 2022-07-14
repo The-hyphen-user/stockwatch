@@ -23,7 +23,7 @@ const userSync = () => {
 const stocksSync = () => {
     axios.get('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=cb3l2vqad3i8tak12f6g')
         .then((data) => {
-            const pasedData = JSON.parse(data);
+            //const pasedData = JSON.parse(data);
             // console.log(data)
             fs.writeFile('stocks.json', pasedData, (err) => {
                 if (err) {
@@ -42,5 +42,5 @@ const userStocksSync = () => {
     console.log('users synced???')
 }
 
-stocksSync();
+//stocksSync();
 // module.exports = { userSync, stocksSync, userStocksSync }
