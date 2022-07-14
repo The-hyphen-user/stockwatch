@@ -13,6 +13,7 @@ const StockLookup = () => {
   const [query, setQuery] = useState('AAPL')
   const [symbol, SetSymbol] = useState('')
   const [stock, setStock] = useState([])
+  const [price, setPrice] = useState([])
 
   const searchForStock = async (e) => {
     
@@ -21,7 +22,9 @@ const StockLookup = () => {
     axios.get(`${baseURL}:${PORT}${extensionURL}${query}`)
       .then((res) => {
         console.log('data: ', res.data)
-        setStock(res.data)
+        //setStock(res.data)
+        // setPrice(res.price)
+        console.log(res)
       })
 
   }
@@ -36,7 +39,7 @@ const StockLookup = () => {
       <input type='search' value={query}
         onChange={e => setQuery(e.target.value)}></input>
       <button onClick={searchForStock}>search</button>
-      <Stock symbol={stock.symbol} quantity={stock.description} />
+      <Stock symbol={stock.symbol} quantity={stock.description} price={price} />
     </div>
   )
 }
