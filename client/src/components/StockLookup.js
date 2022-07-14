@@ -21,6 +21,13 @@ const StockLookup = () => {
     e.preventDefault();
     axios.get(`${baseURL}:${PORT}${extensionURL}${query}`)
       .then((res) => {
+        const newStock = {
+          
+          symbol: res.data.symbol,
+          price :res.data.price,
+          description : res.data.description
+        }
+        setStock(newStock)
         console.log('data: ', res.data)
         //setStock(res.data)
         // setPrice(res.price)
@@ -39,7 +46,7 @@ const StockLookup = () => {
       <input type='search' value={query}
         onChange={e => setQuery(e.target.value)}></input>
       <button onClick={searchForStock}>search</button>
-      <Stock symbol={stock.symbol} quantity={stock.description} price={price} />
+      <Stock symbol={stock.symbol} quantity={stock.description} price={stock.price} />
     </div>
   )
 }

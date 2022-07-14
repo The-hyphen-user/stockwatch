@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import Stock from './Stock'
 import StockLookup from './StockLookup';
+import Balance from './Balance'
 
 
 const User = () => {
@@ -22,10 +23,9 @@ const User = () => {
   const [token, setToken] = useState([])
   const [username, SetUsername] = useState('')
   const [user, SetUser] = useState([])
-  const [stocks, setStocks] = useState([
-    { user_id: 2, ticker: 'AAPL', amount: 999, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' },
-    { user_id: 2, ticker: 'GOOG', amount: 999, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' }
-  ])
+  const [stocks, setStocks] = useState([])
+  const [balance, setBalance] = useState([])
+
   const [fakeStocks, setFakeStocks] = useState([
     { user_id: 2, ticker: 'AAPL', amount: 999, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' },
     { user_id: 2, ticker: 'GOOG', amount: 999, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' }
@@ -75,15 +75,34 @@ const User = () => {
           'token': bearerToken
         }
       }).then((res) => {
-            setStocks(res.data)
-               console.log('data: ', res.data)
-          })
+        setStocks(res.data)
+         console.log('useEffect data: ', res.data)
+      })
 
     }
+    const getBalance = function () {
+      const balance = '/balance'
+      
+      console.log('checking bearer that balance: ')
+      const bearerToken = JSON.parse(localStorage.getItem('token'));
+      console.log('bearerToken: ', bearerToken)
+      const id = jwt_decode(bearerToken.replace('Bearer ', '')).user.id;
+      console.log('extensionURL: ', balance)
+      axios.get(`${baseURL}:${PORT}${balance}${id}`, {
+        headers: {
+          'token': bearerToken
+        }
+    }).then((res) => {
+      console.log('loading that balance: ', res.data.balance)
+      setBalance(res.data.balance.toLocaleString())
+      return res.data.balance
+    })
+  }
 
 
 
     getToken()
+    const balance = getBalance()
   }, [])
 
   /**
@@ -113,7 +132,16 @@ const User = () => {
       }
     })
       .then((res) => {
-        setStocks(res.data)
+        res.forEach(element => {
+          const newStock = {
+            symbol: element.data.symbol,
+            price: element.data.price,
+            description: element.data.description
+          }
+
+          setStocks(stocks => [...stocks, newStock])
+        });
+
         console.log('data: ', res.data)
       })
   }
@@ -131,7 +159,7 @@ const User = () => {
       <br />
       <br />
       <br />
-      <StockLookup/>
+      <StockLookup />
       <b>{bearerToken ?
         <div>
           welcome{' '}
@@ -139,16 +167,18 @@ const User = () => {
           {' '} lets see how your stocks are doing today
 
           <br />
+          <Balance balance={balance}/>
           <br />
           <ul>
             <button onClick={fetchData}>load stocks</button>
             <>
 
-              
+
               {stocks.map((stock, index) => (
                 <Stock key={index}
-                symbol={stock.ticker}
-                  quantity={stock.amount}
+                  symbol={stock.symbol}
+                  quantity={stock.quantity}
+                  price={stock.price}
 
                 />
               ))}

@@ -8,14 +8,14 @@ const fs = require('fs');
 const userSync = () => {
     user.sync({ force: true }).then(() => {
         console.log('sync sucessful')
-        const newUser = user.build({ username: 'fred', email: 'fred@email.com', password: '$2a$08$GYjrOnwuWSvujRK3CGdEZeTaI.BQ5W0bLccUpywqNzFnLcxd9DsHm' });
+        const newUser = user.build({ username: 'fred', email: 'fred@email.com', balance: 10000, password: '$2a$08$GYjrOnwuWSvujRK3CGdEZeTaI.BQ5W0bLccUpywqNzFnLcxd9DsHm' });
         return newUser.save();
     }).then(() => {
-        const newUser2 = user.build({ username: 'dan', email: 'dan@email.com', password: '$2a$08$NwY0yjSkeuWpUKt5VWe9zeMuqShhfqwRvEYMRpHc2aBXfH11mrTqy' });
+        const newUser2 = user.build({ username: 'dan', email: 'dan@email.com', balance: 10000, password: '$2a$08$NwY0yjSkeuWpUKt5VWe9zeMuqShhfqwRvEYMRpHc2aBXfH11mrTqy' });
         return newUser2.save();
 
     }).then(() => {
-        const newUser3 = user.build({ username: 'bob', email: 'bob@email.com', password: '$2a$08$GjPJddHMwNu26MnLm7zTS.59m1tVD6j9IOXKEote88RGpqYp/naTy' });
+        const newUser3 = user.build({ username: 'bob', email: 'bob@email.com', balance: 10000,  password: '$2a$08$GjPJddHMwNu26MnLm7zTS.59m1tVD6j9IOXKEote88RGpqYp/naTy' });
         return newUser3.save();
     })
 }
@@ -43,4 +43,5 @@ const userStocksSync = () => {
 }
 
 //stocksSync();
+//userSync()
 // module.exports = { userSync, stocksSync, userStocksSync }
