@@ -5,7 +5,7 @@ dotenv.config();
 const user = require('../models/user')
 
 //////////////////////////////////////////////////
-//            NOT ENABLED
+//             Working state
 //////////////////////////////////////////////////
 const auth2 = () => {
     return async function (req, res, next) {

@@ -41,5 +41,5 @@ const userStocksSync = () => {
 
 
 
-//userStocksSync();
+userStocksSync(); //for calling with node
  module.exports = { userStocksSync }

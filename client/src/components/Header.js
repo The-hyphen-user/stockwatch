@@ -40,7 +40,7 @@ const Header = () => {
                     </Link>
                 </div>
             </nav>
-        </div >
+        </div>
     )
 }
 

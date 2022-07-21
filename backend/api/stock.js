@@ -24,7 +24,7 @@ router.get("/stocks:id", async (req, res) => {
 
         if (localStoredStock) {//previous looked up and added to stock price table
             var localUpdateTime = moment(localStoredStock.updatedAt);
-            var tenMinAgo = moment(moment.utc().subtract(1, "minutes").toDate());
+            var tenMinAgo = moment(moment.utc().subtract(30, "minutes").toDate());
             if (localUpdateTime.isBefore(tenMinAgo)) {
                 console.log("too old data"); //need to update prices
                 finnhubClient.quote(Stock.symbol, (error, data, response) => {

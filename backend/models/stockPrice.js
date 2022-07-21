@@ -10,13 +10,11 @@ const stockPrice = sequelize.define('stockPrice', {
     },
     price: {
         type: DataTypes.FLOAT(9, 2)
-    },
-    updatedAt: {
-        type: DataTypes.DATE
     }
 },
     {
-        freezeTableName: true
+        freezeTableName: true,
+        timestamps: true
     });
 
 

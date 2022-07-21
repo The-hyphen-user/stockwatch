@@ -20,28 +20,23 @@ const userSync = () => {
     })
 }
 
-const stocksSync = () => {
-    axios.get('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=cb3l2vqad3i8tak12f6g')
-        .then((data) => {
-            //const pasedData = JSON.parse(data);
-            // console.log(data)
-            fs.writeFile('stocks.json', pasedData, (err) => {
-                if (err) {
-                    console.log('error!', err);
-                    throw err;
-                }
-            })
-        }).then(() => {
+// const stocksSync = () => {
+//     axios.get('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=cb3l2vqad3i8tak12f6g')
+//         .then((data) => {
+//             //const pasedData = JSON.parse(data);
+//             // console.log(data)
+//             fs.writeFile('stocks.json', pasedData, (err) => {
+//                 if (err) {
+//                     console.log('error!', err);
+//                     throw err;
+//                 }
+//             })
+//         }).then(() => {
             
-    console.log('stocksSync synced!')
-        })
-    console.log('stocksSync synced???')
-}
+//     console.log('stocksSync synced!')
+//         })
+//     console.log('stocksSync synced???')
+// }
 
-const userStocksSync = () => {
-    console.log('users synced???')
-}
-
-//stocksSync();
-//userSync()
+userSync() //for calling with node
 // module.exports = { userSync, stocksSync, userStocksSync }
