@@ -2,9 +2,8 @@ import React from "react";
 import "../App.css";
 import { useEffect, useState } from "react";
 
-const Stock = ({ symbol, quantity, price , isPurchasable, purchaseStock}) => {
+const Stock = ({ symbol, quantity, price }) => {
   const [total, setTotal] = useState([]);
-  const [amount, setAmount] = useState([]);
 
   useEffect(() => {
     if (quantity && price) {
@@ -23,28 +22,18 @@ const Stock = ({ symbol, quantity, price , isPurchasable, purchaseStock}) => {
           <h3>
             {"$"}
             {price}
-            {" Total: "}
+          </h3>
+        ) : (
+          <div></div>
+        )},
+        {total ? (
+          <h3>
+            {" $ Total: "}
             {total}
           </h3>
         ) : (
           <div></div>
         )}
-        {
-          isPurchasable ? (
-            <div>
-            <button onClick={() => purchaseStock(symbol, amount)}>
-              Purchase
-            </button>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            ></input>
-            </div>
-          ) : (
-            <div></div>
-          )
-        }
       </div>
     </div>
   );

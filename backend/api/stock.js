@@ -18,17 +18,17 @@ router.get("/stocks:id", async (req, res) => {
     //already authed
     const id = req.params.id;
     const Stock = await stocks.findOne({ where: { symbol: id } });
-    console.log("da symbol: ", Stock.symbol);
     if (Stock) {
+        //console.log("da symbol: ", Stock.symbol);
         const localStoredStock = await stockPrice.findOne({where: { symbol: Stock.symbol } });
 
         if (localStoredStock) {//previous looked up and added to stock price table
             var localUpdateTime = moment(localStoredStock.updatedAt);
             var tenMinAgo = moment(moment.utc().subtract(30, "minutes").toDate());
             if (localUpdateTime.isBefore(tenMinAgo)) {
-                console.log("too old data"); //need to update prices
+                //console.log("too old data"); //need to update prices
                 finnhubClient.quote(Stock.symbol, (error, data, response) => {
-                    console.log(data);
+                    //console.log(data);
                     stockPrice.update({ price: data.c },{where: { symbol: Stock.symbol,} });
                     const responceStock = {
                         symbol: Stock.symbol,
@@ -49,7 +49,7 @@ router.get("/stocks:id", async (req, res) => {
             }
         } else { //didnt find stock on stock price table
             finnhubClient.quote(Stock.symbol, (error, data, response) => {
-            console.log(data);
+            //console.log(data);
             //stockPrice.update({ price: data.c },{where: { symbol: Stock.symbol,} });
             stockPrice.create({symbol: Stock.symbol, price: data.c})
             const responceStock = {
@@ -58,14 +58,16 @@ router.get("/stocks:id", async (req, res) => {
                 description : Stock.description
             }
             res.send(responceStock);
-            console.log('real send it: ', responceStock)
+            //console.log('real send it: ', responceStock)
             return;
         });
         }
     } else {
+        console.log("no stock found");
     //didnt find stock in search
-    res.status(404);
+    res.status(404).send("User Page");
     }
+    return;
 
 });
 

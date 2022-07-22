@@ -11,6 +11,7 @@ import About from './About';
 import Signup from './Signup';
 import User from './User'
 import Home from './Home'
+import Logout from './Logout'
 
 
 
@@ -37,6 +38,9 @@ const Header = () => {
                     </Link>
                     <Link to={'/about'} style={{ textDecoration: 'none' }}>
                         <button className='btn'>About</button>
+                    </Link>
+                    <Link to={'/login'} style={{ textDecoration: 'none' }}>
+                        <button className='btn'>Logout</button>
                     </Link>
                 </div>
             </nav>

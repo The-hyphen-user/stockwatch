@@ -61,8 +61,8 @@ const Login = () => {//{signupmail, signupPassword}
       email,
       password
     }).then((res) => {
-      console.log('res: ', res);
-      console.log('token: ', res.data.token);
+      //console.log('res: ', res);
+      //console.log('token: ', res.data.token);
       const token = (JSON.stringify('Bearer ' + res.data.token))
       console.log('TOKEN: ', token)
       localStorage.setItem('token', token)
@@ -78,7 +78,9 @@ const Login = () => {//{signupmail, signupPassword}
       const bearerLoginToken = JSON.parse(localStorage.getItem('login'));
       if(bearerLoginToken){
         const loginEmail = jwt_decode(bearerLoginToken.replace('Bearer ', '')).login.email
+        console.log('loginEmail: ', loginEmail)
         const loginPassword = jwt_decode(bearerLoginToken.replace('Bearer ', '')).login.password
+        console.log('loginPassword: ', loginPassword)
   
         setEmail(loginEmail)
         setPassword(loginPassword)
