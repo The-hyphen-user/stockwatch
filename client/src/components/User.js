@@ -7,14 +7,6 @@ import StockLookup from "./StockLookup";
 import Balance from "./Balance";
 
 const User = () => {
-  // const [user, setUser] = useState([])
-  // localStorage.getItem()
-  // useEffect(() => {
-
-  //   return () => {
-  //   }
-  // }, [])
-
   const [bearerToken, setBearerToken] = useState(["Bearer missing-token-info"]);
   const [token, setToken] = useState([]);
   const [username, SetUsername] = useState("");
@@ -23,6 +15,9 @@ const User = () => {
   const [balance, setBalance] = useState([]);
   const [lookedUpStocks, setLookedUpStocks] = useState([]);
   const [query, setQuery] = useState("AAPL");
+  const [maximumPurchasable, setMaximumPurchasable] = useState(999999);
+  const [purchaseAmount, setPurchaseAmount] = useState(0);
+  const [purchasePrice, setPurchasePrice] = useState(0);
 
   const [fakeStocks, setFakeStocks] = useState([
     {
@@ -127,13 +122,49 @@ const User = () => {
       .then((res) => {
         console.log("searching for stock: ", res.data);
         setLookedUpStocks(res.data);
+        calculateMaximumPurchasable(res.data.price, balance);
+        return res.data.price;
+      })
+      .then((price) => {
+        calculatePurchaseAmount(price);
+        console.log("price: ", price);
       })
       .catch((err) => {
         console.log("error: ", err);
-        if (err.response.status === 404) {
+        if (err === 404) {
           setLookedUpStocks({ symbol: "Stock not found" });
         }
       });
+  };
+
+  const calculateMaximumPurchasable = (price, balance) => {
+    console.log("calculating maximum purchasable: ", price, balance);
+    const max = Math.floor(parseInt(balance) / parseInt(price));
+    console.log("max: ", max);
+    setMaximumPurchasable(max);
+    if (purchaseAmount > max) {
+      setPurchaseAmount(max);
+      setPurchasePrice(max * lookedUpStocks.price);
+    } else {
+    }
+  };
+
+  //check that e is less then maximumPurchasable before setting state
+  const calculatePurchaseAmount = (e) => {
+    if (typeof e === "number") {
+      console.log("not a num");
+      setPurchasePrice(e * purchaseAmount);
+    } else {
+      e.preventDefault();
+      console.log("calculating purchase amount: ", e.target.value);
+      if (e.target.value <= maximumPurchasable) {
+        setPurchaseAmount(e.target.value);
+        setPurchasePrice(e.target.value * lookedUpStocks.price);
+      } else {
+        setPurchaseAmount(maximumPurchasable);
+        setPurchasePrice(maximumPurchasable * lookedUpStocks.price);
+      }
+    }
   };
 
   return (
@@ -142,7 +173,6 @@ const User = () => {
       <br />
       <br />
       <br />
-      <StockLookup purchase={purcaseStock} />
       <input
         type="search"
         value={query}
@@ -151,6 +181,32 @@ const User = () => {
       <button onClick={searchForStock}>search</button>
       <br />
       <Stock symbol={lookedUpStocks.symbol} price={lookedUpStocks.price} />
+      <div>
+        {lookedUpStocks ? (
+          <div>
+            <input
+              type="number"
+              min="0"
+              step="1"
+              value={purchaseAmount}
+              onChange={(e) => calculatePurchaseAmount(e)}
+            />{" "}
+            <button>Purchase</button>
+            {purchasePrice ? (
+              <div>
+                <p>
+                  You will purchase {purchaseAmount} stocks for{" "}
+                  {purchasePrice.toLocaleString()}
+                </p>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
 
       <div>
         {bearerToken ? (
@@ -173,7 +229,7 @@ const User = () => {
                     ))}
                   </div>
                 ) : (
-                  <div>Loading...</div>
+                  <div>No Stocks</div>
                 )}
               </div>
               {token}
