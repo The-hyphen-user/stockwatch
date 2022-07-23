@@ -58,11 +58,14 @@ const auth2 = () => {
 };
 
 const auth = () => {
-  return async function (req, res, next) {
+  return async function (req, res, next) {//need to compare req.body.id to token.user.id
+    //console.log("going through auth", req.headers);
     try {
       const authHeader = req.headers.token;
       const bearer = "Bearer ";
+      //console.log("going through auth", authHeader);
       if (!authHeader || !authHeader.startsWith(bearer)) {
+        console.log("no token");
         return res.sendStatus(401);
       }
       const token = authHeader.replace(bearer, "");

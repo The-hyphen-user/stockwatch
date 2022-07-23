@@ -18,6 +18,7 @@ const User = () => {
   const [maximumPurchasable, setMaximumPurchasable] = useState(999999);
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const [purchasePrice, setPurchasePrice] = useState(0);
+  const [refresh, setRefresh] = useState(false);
 
   const [fakeStocks, setFakeStocks] = useState([
     {
@@ -88,28 +89,34 @@ const User = () => {
     };
 
     getUserStocks();
-  }, []);
+    setRefresh(false);
+  }, [refresh]);
 
-  const purcaseStock = function (stock) {
-    if (stock.symbol === "stock not found") {
+  const purcaseStock = function () {
+    if (lookedUpStocks.symbol === "Stock not found" ||lookedUpStocks.symbol === "" || lookedUpStocks.symbol === undefined || lookedUpStocks.symbol === []) {
+      console.log("Stock not found", lookedUpStocks);
     } else {
-      console.log("purchasing ", stock.amount, " stock: ", stock);
-      // const bearerToken = JSON.parse(localStorage.getItem('token'))
+      console.log("purchasing ", purchaseAmount, " of ", lookedUpStocks);
+      //const bearerToken = JSON.parse(localStorage.getItem('token'))
       const bearerToken = JSON.parse(localStorage.getItem("token"));
       const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
-      console.log("to be send for purchase: ", id, stock, stock.amount);
+      console.log("to be send for purchase: ", id, lookedUpStocks, purchaseAmount);
       axios
         .post(`${baseURL}:${PORT}/purchase`, {
-          ticker: stock,
-          amount: stock.amount,
+          ticker: lookedUpStocks.symbol,
+          amount: purchaseAmount,
           id: id,
+        },{
           headers: {
             token: bearerToken,
-          },
+          }
         })
-        .then((res) => {
-          console.log("purchased: ", res.data);
-          setStocks(res.data);
+        .then(function (response) {
+          console.log('res: ', response);
+          setRefresh(true);
+        })
+        .catch(function (error) {
+          console.log(error);
         });
     }
   };
@@ -131,7 +138,7 @@ const User = () => {
       })
       .catch((err) => {
         console.log("error: ", err);
-        if (err === 404) {
+        if (err.response.status === 404) {
           setLookedUpStocks({ symbol: "Stock not found" });
         }
       });
@@ -167,6 +174,30 @@ const User = () => {
     }
   };
 
+  const sellStock = function (amount, symbol) {
+    console.log("selling ", amount, " of ", symbol);
+    //triggered from stock component
+    const bearerToken = JSON.parse(localStorage.getItem("token"));
+    const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
+    console.log("to be send for purchase: ", id, symbol, amount);
+    axios
+      .post(`${baseURL}:${PORT}/sell`, {
+        ticker: symbol,
+        amount: amount,
+        id: id,
+      },{
+        headers: {
+          token: bearerToken,
+        }
+      }).then(function (response) {
+        console.log('res: ', response);
+        setRefresh(true);
+      })
+
+        
+  }
+
+
   return (
     <div>
       <br />
@@ -191,7 +222,7 @@ const User = () => {
               value={purchaseAmount}
               onChange={(e) => calculatePurchaseAmount(e)}
             />{" "}
-            <button>Purchase</button>
+            <button onClick={purcaseStock}>Purchase</button>
             {purchasePrice ? (
               <div>
                 <p>
@@ -225,6 +256,7 @@ const User = () => {
                         symbol={stock.symbol}
                         quantity={stock.quantity}
                         price={stock.price}
+                        sellStock={sellStock}
                       />
                     ))}
                   </div>
