@@ -17,7 +17,7 @@ router.post("/sell", async (req, res) => {
     User.balance = User.balance + StockPrice.price * amount;
     User.save();
     userStock.amount = userStock.amount - amount;
-    console.log('#', userStock.amount, amount);
+    console.log("#", userStock.amount, amount);
     userStock.save();
     return true;
   };
@@ -46,7 +46,5 @@ router.post("/sell", async (req, res) => {
     res.send("fail");
   }
 });
-
-
 
 module.exports = router;

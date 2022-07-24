@@ -10,7 +10,7 @@ const auth2 = () => {
   return async function (req, res, next) {
     try {
       const userId = req.params.user;
-      console.log("going through auth", req.params.user, ' params: ' , userId);
+      console.log("going through auth", req.params.user, " params: ", userId);
       //console.log("headers: ", req.headers.token);
 
       const authHeader = req.headers.token;
@@ -58,7 +58,8 @@ const auth2 = () => {
 };
 
 const auth = () => {
-  return async function (req, res, next) {//need to compare req.body.id to token.user.id
+  return async function (req, res, next) {
+    //need to compare req.body.id to token.user.id
     //console.log("going through auth", req.headers);
     try {
       const authHeader = req.headers.token;
@@ -76,7 +77,7 @@ const auth = () => {
       const User = await user.findOne({ where: { id: decoded.user.id } });
       if (User) {
         console.log("valid user", decoded.user.id);
-        next()
+        next();
       } else {
         return res.sendStatus(401);
       }
@@ -84,18 +85,17 @@ const auth = () => {
       e.status = 401;
       next(e);
     }
-    
+
     //console.log("valid user");
     next();
   };
 };
 
-
 const auth3 = () => {
   return async function (req, res, next) {
     try {
       const userId = req.params.user;
-      console.log("going through auth", req.params.user, ' params: ' , userId);
+      console.log("going through auth", req.params.user, " params: ", userId);
       //console.log("headers: ", req.headers.token);
 
       const authHeader = req.headers.token;

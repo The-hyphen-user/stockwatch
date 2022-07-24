@@ -93,26 +93,40 @@ const User = () => {
   }, [refresh]);
 
   const purcaseStock = function () {
-    if (lookedUpStocks.symbol === "Stock not found" ||lookedUpStocks.symbol === "" || lookedUpStocks.symbol === undefined || lookedUpStocks.symbol === []) {
+    if (
+      lookedUpStocks.symbol === "Stock not found" ||
+      lookedUpStocks.symbol === "" ||
+      lookedUpStocks.symbol === undefined ||
+      lookedUpStocks.symbol === []
+    ) {
       console.log("Stock not found", lookedUpStocks);
     } else {
       console.log("purchasing ", purchaseAmount, " of ", lookedUpStocks);
       //const bearerToken = JSON.parse(localStorage.getItem('token'))
       const bearerToken = JSON.parse(localStorage.getItem("token"));
       const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
-      console.log("to be send for purchase: ", id, lookedUpStocks, purchaseAmount);
+      console.log(
+        "to be send for purchase: ",
+        id,
+        lookedUpStocks,
+        purchaseAmount
+      );
       axios
-        .post(`${baseURL}:${PORT}/purchase`, {
-          ticker: lookedUpStocks.symbol,
-          amount: purchaseAmount,
-          id: id,
-        },{
-          headers: {
-            token: bearerToken,
+        .post(
+          `${baseURL}:${PORT}/purchase`,
+          {
+            ticker: lookedUpStocks.symbol,
+            amount: purchaseAmount,
+            id: id,
+          },
+          {
+            headers: {
+              token: bearerToken,
+            },
           }
-        })
+        )
         .then(function (response) {
-          console.log('res: ', response);
+          console.log("res: ", response);
           setRefresh(true);
         })
         .catch(function (error) {
@@ -181,22 +195,24 @@ const User = () => {
     const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
     console.log("to be send for purchase: ", id, symbol, amount);
     axios
-      .post(`${baseURL}:${PORT}/sell`, {
-        ticker: symbol,
-        amount: amount,
-        id: id,
-      },{
-        headers: {
-          token: bearerToken,
+      .post(
+        `${baseURL}:${PORT}/sell`,
+        {
+          ticker: symbol,
+          amount: amount,
+          id: id,
+        },
+        {
+          headers: {
+            token: bearerToken,
+          },
         }
-      }).then(function (response) {
-        console.log('res: ', response);
+      )
+      .then(function (response) {
+        console.log("res: ", response);
         setRefresh(true);
-      })
-
-        
-  }
-
+      });
+  };
 
   return (
     <div>

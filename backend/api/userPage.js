@@ -57,7 +57,7 @@ router.get("/user:id", async (req, res) => {
   };
   const getStockFromLocalStorage = (stock) => {
     //console.log("stock is recent enough: ", stock);
-    return localStoredStock = stockPrice
+    return (localStoredStock = stockPrice
       .findOne({
         where: { symbol: stock.ticker },
       })
@@ -69,7 +69,7 @@ router.get("/user:id", async (req, res) => {
           quantity: stock.amount,
         };
         return responceStock;
-      });
+      }));
   };
 
   const User = await user.findOne({ where: { id: id } });
@@ -80,8 +80,11 @@ router.get("/user:id", async (req, res) => {
     });
     //after all stocks have been getData then send them in an array as responce
     Promise.all(promises).then((data) => {
-      console.log("ALL DATA FOR THE LOGIN SEND: ", {balance: User.balance, stocks: data});
-      res.send({balance: User.balance, stocks: data});
+      console.log("ALL DATA FOR THE LOGIN SEND: ", {
+        balance: User.balance,
+        stocks: data,
+      });
+      res.send({ balance: User.balance, stocks: data });
     });
   }
 });

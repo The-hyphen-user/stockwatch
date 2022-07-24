@@ -10,15 +10,14 @@ const userStocks = require("../models/userStocks");
 
 //router purchase stock if balance is high enough
 router.post("/purchase", async (req, res) => {
-  const { id, ticker} = req.body;
-  const amount = Number(req.body.amount)
+  const { id, ticker } = req.body;
+  const amount = Number(req.body.amount);
   //console.log(res)
   const User = await user.findOne({ where: { id: id } });
-  
+
   const balance = User.balance;
-  console.log('balance: ', User)
-   res.send("purchased" );
-  
+  console.log("balance: ", User);
+  res.send("purchased");
 
   //get balance for user from database
   //check if stock.updatedAt is recent enough
@@ -53,10 +52,10 @@ router.post("/purchase", async (req, res) => {
               amount: amount,
             });
           }
-          console.log('sending this?')
+          console.log("sending this?");
           //return res.send({message:"purchased"});
         } else {
-          console.log('sending this?')
+          console.log("sending this?");
           //return res.send({ error: "Insufficient funds" });
         }
         return response.send({ message: "purchased" });
@@ -75,7 +74,7 @@ router.post("/purchase", async (req, res) => {
         const UserStock = await userStocks.findOne({
           where: { user_id: id, ticker: ticker },
         });
-        
+
         if (UserStock) {
           userStocks.update(
             { amount: UserStock.amount + amount },
@@ -88,25 +87,24 @@ router.post("/purchase", async (req, res) => {
             amount: amount,
           });
         }
-         console.log("purchased!");
-         //return res.send("purchased!");
+        console.log("purchased!");
+        //return res.send("purchased!");
         // console.log("purchased2");
       } else {
-        console.log('got here Insufficient funds');
+        console.log("got here Insufficient funds");
         //return res.json({ error: "Insufficient funds" });
       }
     }
   } else {
     //send error message didn't find stock
-        console.log("purchased2");
+    console.log("purchased2");
     //return res.send({ message: "didn't find stock" });
     //return;
   }
   console.log("purchased...");
   //res.send("purchased" );
   console.log("purchased2");
-  
-})
+});
 
 module.exports = router;
 

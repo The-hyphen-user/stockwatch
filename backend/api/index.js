@@ -5,12 +5,9 @@
 // const auth = require('../middleware/auth')
 // const userPage = require('./userPage')
 
-
-
 // router.use(login)
 // router.use(signup)
 // //router.use(auth(), userPage)
 // router.use(userPage)
-
 
 // module.exports = router;

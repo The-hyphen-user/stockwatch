@@ -8,11 +8,10 @@ const user = require("../models/user");
 
 router.post("/api/login", async (req, res) => {
   const { email, password: pass } = req.body;
-  console.log('logging in: ', email, pass);
+  console.log("logging in: ", email, pass);
   const User = await user.findOne({ where: { email } });
   if (!User) {
-    
-  //console.log("got here");
+    //console.log("got here");
     return res.status(401).send("Unable to login!");
   }
 

@@ -62,14 +62,14 @@
 // module.exports = router;
 
 // /**
-//  * 
-//  * 
-//  * 
-//  * 
-            
+//  *
+//  *
+//  *
+//  *
+
 //             if (balance >= amount * data.c) {
-//  * 
-//  * 
+//  *
+//  *
 //  * router.post("/purchase", async (req, res) => {
 //     const { user_id, ticker, amount } = req.body;
 //     const userStocks = await stocks.findOne({ where: { user_id: user_id, ticker: ticker } });

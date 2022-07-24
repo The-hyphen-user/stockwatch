@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 import { useEffect, useState } from "react";
 
-const Stock = ({ symbol, quantity, price, sellStock}) => {
+const Stock = ({ symbol, quantity, price, sellStock }) => {
   const [total, setTotal] = useState([]);
   const [amount, setAmount] = useState([]);
   const [sellAmount, setSellAmount] = useState([]);
@@ -21,12 +21,11 @@ const Stock = ({ symbol, quantity, price, sellStock}) => {
     } else {
       setSellAmount(quantity);
     }
-  }
+  };
 
   const sell = () => {
     sellStock(sellAmount, symbol);
-  }
-
+  };
 
   return (
     <div className="center">
@@ -47,7 +46,7 @@ const Stock = ({ symbol, quantity, price, sellStock}) => {
       </div>
       <div className="sell-title">sell Stock</div>
       <input
-      className="stock-input"
+        className="stock-input"
         type="number"
         min="0"
         step="1"
@@ -55,7 +54,9 @@ const Stock = ({ symbol, quantity, price, sellStock}) => {
         value={sellAmount}
         onChange={(e) => changeSellAmount(e)}
       />
-      <button className="sell-btn" onClick={() => sell()}>Sell</button>
+      <button className="sell-btn" onClick={() => sell()}>
+        Sell
+      </button>
     </div>
   );
 };
