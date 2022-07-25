@@ -72,6 +72,18 @@ router.get("/user:id", async (req, res) => {
       }));
   };
 
+  const calcWealth = (stocks, balance) => {
+    let wealth = 0;
+    stocks.forEach((stock) => {
+      wealth += stock.price * stock.quantity;
+    }
+    );
+    wealth += balance;
+    return wealth;
+  }
+
+
+
   const User = await user.findOne({ where: { id: id } });
   const Stocks = await userStocks.findAll({ where: { user_id: id } }); //, raw: true
   if (Stocks) {
@@ -82,9 +94,11 @@ router.get("/user:id", async (req, res) => {
     Promise.all(promises).then((data) => {
       console.log("ALL DATA FOR THE LOGIN SEND: ", {
         balance: User.balance,
+        privacy: User.privacy,
         stocks: data,
       });
-      res.send({ balance: User.balance, stocks: data });
+      const wealth = calcWealth(data, User.balance);
+      res.send({ balance: User.balance, privacy:User.privacy, wealth, stocks: data });
     });
   }
 });

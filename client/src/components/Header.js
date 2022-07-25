@@ -11,7 +11,7 @@ import About from './About';
 import Signup from './Signup';
 import User from './User'
 import Home from './Home'
-import Logout from './Logout'
+import Logout from './Logout';
 
 
 
@@ -39,9 +39,12 @@ const Header = () => {
                     <Link to={'/about'} style={{ textDecoration: 'none' }}>
                         <button className='btn'>About</button>
                     </Link>
-                    <Link to={'/login'} style={{ textDecoration: 'none' }}>
-                        <button className='btn'>Logout</button>
+                    <Link to={'/highscores'} style={{ textDecoration: 'none' }}>
+                        <button className='btn'>High Scores</button>
                     </Link>
+
+
+                    <Logout />
                 </div>
             </nav>
         </div>
@@ -51,7 +54,10 @@ const Header = () => {
 export default Header
 
 /*
-
+                    <Link to={'/Logout'} style={{ textDecoration: 'none' }}>
+                        <button className='btn'>Logout</button>
+                        
+                    </Link>
 
         <Routes>
           <Route path="/" element={<Header />}>

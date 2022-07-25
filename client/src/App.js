@@ -13,6 +13,7 @@ import Login from './components/Login';
 import About from './components/About';
 import Signup from './components/Signup';
 import User from './components/User'
+import HighScores from './components/HighScores';
 
 
 
@@ -27,6 +28,9 @@ function App() {
             <Route path='/user' element={<User />} />
             <Route path='/about' element={<About />} />
             <Route path='/home' element={<Home />} />
+            <Route path='highscores' element={<HighScores />} />
+            <Route path='/' element={<Home />} />
+
             
           
         </Routes>

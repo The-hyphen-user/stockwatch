@@ -109,3 +109,18 @@ justify-content: center;
   margin-right: 1%;
   width: 5%;
 }
+
+
+.privacy {
+  border: #2e373b87 2px solid;
+  width: 5%;
+  justify-self: center;
+}
+
+.privacy-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: baseline;
+}

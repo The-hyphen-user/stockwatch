@@ -5,6 +5,7 @@ import axios from "axios";
 import Stock from "./Stock";
 import StockLookup from "./StockLookup";
 import Balance from "./Balance";
+import "../App.css";
 
 const User = () => {
   const [bearerToken, setBearerToken] = useState(["Bearer missing-token-info"]);
@@ -19,6 +20,8 @@ const User = () => {
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const [purchasePrice, setPurchasePrice] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
+  const [wealth, setWealth] = useState(0);
 
   const [fakeStocks, setFakeStocks] = useState([
     {
@@ -53,7 +56,7 @@ const User = () => {
       const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
       console.log("id: ", id);
       axios
-        .get(`${baseURL}:${PORT}${extensionURL}${id}`, {
+        .get(`${baseURL}:${PORT}/user${id}`, {
           headers: {
             token: bearerToken,
           },
@@ -62,6 +65,10 @@ const User = () => {
           setStocks(res.data.stocks);
           console.log("useEffect data: ", res.data.stocks);
           setBalance(res.data.balance);
+          setPrivacy(res.data.privacy);
+          setWealth(res.data.wealth);
+          console.log("useEffect balance: ", res.data.balance);
+          console.log("useEffect privacy: ", res.data.privacy);
         })
         .then(() => {
           //getBalance();
@@ -214,11 +221,46 @@ const User = () => {
       });
   };
 
+  const changePrivacy = function (e) {
+    setPrivacy(e);
+    console.log("setting privacy: ", e);
+    const bearerToken = JSON.parse(localStorage.getItem("token"));
+    const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
+    axios
+      .post(
+        `${baseURL}:${PORT}/privacy${id}`,
+        {
+          privacy: e,
+          id: id,
+        },
+        {
+          headers: {
+            token: bearerToken,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log("res: ", response);
+        setRefresh(true);
+      });
+  };
+
   return (
     <div>
       <br />
       <br />
       <br />
+      <div className="privacy-container">
+        <div className="privacy">
+          <label>Privacy: </label>
+          <input
+            type="checkbox"
+            checked={privacy}
+            onChange={(e) => changePrivacy(e.target.checked)}
+          />
+        </div>
+      </div>
+
       <br />
       <input
         type="search"
@@ -262,6 +304,9 @@ const User = () => {
             <br />
             <Balance balance={balance} />
             <br />
+            {'Wealth: ' + wealth.toLocaleString()}
+            <br />
+            
             <>
               <div>
                 {stocks ? (

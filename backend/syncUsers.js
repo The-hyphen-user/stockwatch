@@ -13,8 +13,10 @@ const userSync = () => {
         username: "fred",
         email: "fred@email.com",
         balance: 10000,
+        wealth: 10000.00,
         password:
           "$2a$08$GYjrOnwuWSvujRK3CGdEZeTaI.BQ5W0bLccUpywqNzFnLcxd9DsHm",
+          privacy: true,
       });
       return newUser.save();
     })
@@ -23,8 +25,10 @@ const userSync = () => {
         username: "dan",
         email: "dan@email.com",
         balance: 10000,
+        wealth: 10000.00,
         password:
           "$2a$08$NwY0yjSkeuWpUKt5VWe9zeMuqShhfqwRvEYMRpHc2aBXfH11mrTqy",
+          privacy: false,
       });
       return newUser2.save();
     })
@@ -33,6 +37,8 @@ const userSync = () => {
         username: "bob",
         email: "bob@email.com",
         balance: 10000,
+        wealth: 10000.00,
+        privacy: true,
         password:
           "$2a$08$GjPJddHMwNu26MnLm7zTS.59m1tVD6j9IOXKEote88RGpqYp/naTy",
       });

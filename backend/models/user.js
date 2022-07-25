@@ -21,6 +21,13 @@ const user = sequelize.define(
     balance: {
       type: DataTypes.INTEGER,
     },
+    wealth: {
+      type: DataTypes.FLOAT(13, 2),
+    },
+    privacy: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,

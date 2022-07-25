@@ -30,3 +30,19 @@ future goals
 
 
 join with a group ( everyone starts at the same time with the same capitol. the group with have a ranking to see who the top traders are. the group can compare members against each other even if your account is set to private)
+
+
+
+List of current things to do:
+incurporate search for description of stocks 
+ex. so you can find apple stock by searching apple
+
+impletement stock splitting check so you dont lose stock when a stock splits
+
+implement calulation for overall wealth
+possibly save past welath chart for graph  up and downs in overall wealth
+add ability to compare yourself with others on the website
+add high scores to see top performers
+add ability to compare yourself with famouse investors/investor groups
+
+switch login token into redux global state
