@@ -21,7 +21,7 @@ const calculateWealth = async () => {
         });
         for (let UserStock of UserStocks) {
           const StockPrice = await stockPrice.findOne({
-            where: { symbol: UserStock.ticker },
+            where: { symbol: UserStock.symbol },
           });
           wealth += StockPrice.price * UserStock.amount;
         }

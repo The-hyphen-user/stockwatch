@@ -4,12 +4,12 @@ const fs = require("fs");
 
 const userStocksSync = () => {
   userStocks
-    .sync({ force: true })
+    .sync()
     .then(() => {
       console.log("sync sucessful");
       const newUserStock = userStocks.build({
         user_id: 1,
-        ticker: "AAPL",
+        symbol: "AAPL",
         amount: 5,
       });
       return newUserStock.save();
@@ -18,7 +18,7 @@ const userStocksSync = () => {
       console.log("sync sucessful");
       const newUserStock = userStocks.build({
         user_id: 1,
-        ticker: "GOOG",
+        symbol: "GOOG",
         amount: 2,
       });
       return newUserStock.save();
@@ -27,7 +27,7 @@ const userStocksSync = () => {
       console.log("sync sucessful");
       const newUserStock = userStocks.build({
         user_id: 1,
-        ticker: "ROKU",
+        symbol: "ROKU",
         amount: 10,
       });
       return newUserStock.save();
@@ -36,7 +36,7 @@ const userStocksSync = () => {
       console.log("sync sucessful");
       const newUserStock = userStocks.build({
         user_id: 2,
-        ticker: "AAPL",
+        symbol: "AAPL",
         amount: 10,
       });
       return newUserStock.save();
@@ -45,7 +45,7 @@ const userStocksSync = () => {
       console.log("sync sucessful");
       const newUserStock = userStocks.build({
         user_id: 2,
-        ticker: "GOOG",
+        symbol: "GOOG",
         amount: 1,
       });
       return newUserStock.save();
@@ -54,7 +54,7 @@ const userStocksSync = () => {
       console.log("sync sucessful");
       const newUserStock = userStocks.build({
         user_id: 3,
-        ticker: "AAPL",
+        symbol: "AAPL",
         amount: 15,
       });
       return newUserStock.save();
@@ -63,7 +63,7 @@ const userStocksSync = () => {
       console.log("sync sucessful");
       const newUserStock = userStocks.build({
         user_id: 3,
-        ticker: "ZM",
+        symbol: "ZM",
         amount: 5,
       });
       return newUserStock.save();

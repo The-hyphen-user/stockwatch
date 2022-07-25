@@ -26,14 +26,14 @@ const User = () => {
   const [fakeStocks, setFakeStocks] = useState([
     {
       user_id: 2,
-      ticker: "AAPL",
+      symbol: "AAPL",
       amount: 999,
       createdAt: "2022-07-12T20:15:35.000Z",
       updatedAt: "2022-07-12T20:15:35.000Z",
     },
     {
       user_id: 2,
-      ticker: "GOOG",
+      symbol: "GOOG",
       amount: 999,
       createdAt: "2022-07-12T20:15:35.000Z",
       updatedAt: "2022-07-12T20:15:35.000Z",
@@ -122,7 +122,7 @@ const User = () => {
         .post(
           `${baseURL}:${PORT}/purchase`,
           {
-            ticker: lookedUpStocks.symbol,
+            symbol: lookedUpStocks.symbol,
             amount: purchaseAmount,
             id: id,
           },
@@ -148,7 +148,7 @@ const User = () => {
     axios
       .get(`${baseURL}:${PORT}${extensionURL4}${query}`)
       .then((res) => {
-        console.log("searching for stock: ", res.data);
+        console.log("searching for stock!!!: ", res.data);
         setLookedUpStocks(res.data);
         calculateMaximumPurchasable(res.data.price, balance);
         return res.data.price;
@@ -205,7 +205,7 @@ const User = () => {
       .post(
         `${baseURL}:${PORT}/sell`,
         {
-          ticker: symbol,
+          symbol: symbol,
           amount: amount,
           id: id,
         },
@@ -269,7 +269,11 @@ const User = () => {
       ></input>
       <button onClick={searchForStock}>search</button>
       <br />
-      <Stock symbol={lookedUpStocks.symbol} price={lookedUpStocks.price} />
+      <Stock
+        symbol={lookedUpStocks.symbol}
+        price={lookedUpStocks.price}
+        description={lookedUpStocks.description}
+      />
       <div>
         {lookedUpStocks ? (
           <div>
@@ -304,9 +308,8 @@ const User = () => {
             <br />
             <Balance balance={balance} />
             <br />
-            {'Wealth: ' + wealth.toLocaleString()}
+            {"Wealth: " + wealth.toLocaleString()}
             <br />
-            
             <>
               <div>
                 {stocks ? (
@@ -317,6 +320,7 @@ const User = () => {
                         symbol={stock.symbol}
                         quantity={stock.quantity}
                         price={stock.price}
+                        description={stock.description}
                         sellStock={sellStock}
                       />
                     ))}

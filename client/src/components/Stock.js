@@ -2,10 +2,11 @@ import React from "react";
 import "../App.css";
 import { useEffect, useState } from "react";
 
-const Stock = ({ symbol, quantity, price, sellStock }) => {
+const Stock = ({ symbol, description, quantity, price, sellStock }) => {
   const [total, setTotal] = useState([]);
   const [amount, setAmount] = useState([]);
   const [sellAmount, setSellAmount] = useState([]);
+  //const [description, setDescription] = useState([]);
 
   useEffect(() => {
     if (quantity && price) {
@@ -26,12 +27,12 @@ const Stock = ({ symbol, quantity, price, sellStock }) => {
   const sell = () => {
     sellStock(sellAmount, symbol);
   };
-
+  if (quantity!== 0 ) {
   return (
     <div className="center">
       <div className="stock">
         <h3>
-          {symbol} {quantity}{" "}
+        {quantity}{'  '}{symbol} {description}{" "}
         </h3>
         {price ? (
           <h3>
@@ -59,6 +60,7 @@ const Stock = ({ symbol, quantity, price, sellStock }) => {
       </button>
     </div>
   );
+        }
 };
 
 export default Stock;

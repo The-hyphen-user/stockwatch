@@ -23,8 +23,8 @@ const User = () => {
   const [user, SetUser] = useState([])
   const [stocks, setStocks] = useState([])
   const [fakeStocks, setFakeStocks] = useState([
-    { user_id: 2, ticker: 'AAPL', amount: 10, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' },
-    { user_id: 2, ticker: 'GOOG', amount: 1, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' }
+    { user_id: 2, symbol: 'AAPL', amount: 10, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' },
+    { user_id: 2, symbol: 'GOOG', amount: 1, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' }
   ])
 
 
@@ -145,11 +145,11 @@ const User = () => {
             <>
 
               {stocks.map((stock, index) => (
-                <div key={index}> {stock.ticker}</div>
+                <div key={index}> {stock.symbol}</div>
               ))}
               {stocks.map((stock, index) => (
                 <Stock key={index}
-                ticker={stock.ticker}
+                symbol={stock.symbol}
                 quantity={stock.amount}
                 
                 />
@@ -187,7 +187,7 @@ export default User
 {stocks.map((stock) => (
                 // Setting "index" as key because name and age can be repeated, It will be better if you assign uniqe id as key
                 <li >
-                  <span>ticker: {stock.ticker}</span>{" "}
+                  <span>symbol: {stock.symbol}</span>{" "}
                   <span>amount: {stock.amount}</span>
                 </li>
               ))}
@@ -196,7 +196,7 @@ export default User
           <ul>
             {fakeStocks.map((post) =>
               <li key={post.user_id}>
-                {post.ticker}
+                {post.symbol}
               </li>
             )}
           </ul>
@@ -211,7 +211,7 @@ export default User
 
 {stocks.map((stock) => 
               <li>
-              {stock.ticker}
+              {stock.symbol}
               </li>
             )}
 

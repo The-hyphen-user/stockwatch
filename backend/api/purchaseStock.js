@@ -16,12 +16,12 @@ api_key.apiKey = env; // Replace this
 const finnhubClient = new finnhub.DefaultApi();
 
 router.post("/purchase", async (req, res) => {
-  const { id, ticker } = req.body;
+  const { id, symbol } = req.body;
   const amount = Number(req.body.amount);
 
   const getData = (stock) => {
     const localStoredStock = stockPrice.findAll({
-      where: { symbol: stock.ticker },
+      where: { symbol: stock.symbol },
     });
     if (localStoredStock) {
       //has local price?
@@ -42,12 +42,12 @@ router.post("/purchase", async (req, res) => {
 
   const getStockFromFinnhub = (stock) => {
     //console.log("too old data: ", stock);
-    finnhubClient.quote(stock.ticker, (error, data, response) => {
+    finnhubClient.quote(stock.symbol, (error, data, response) => {
       //console.log(data);
       //async stockPrice.update(//can i async here for performance?
-      stockPrice.update({ price: data.c }, { where: { symbol: stock.ticker } });
+      stockPrice.update({ price: data.c }, { where: { symbol: stock.symbol } });
       const responceStock = {
-        symbol: stock.ticker,
+        symbol: stock.symbol,
         price: data.c,
         quantity: stock.amount,
       };
@@ -59,12 +59,12 @@ router.post("/purchase", async (req, res) => {
     //console.log("stock is recent enough: ", stock);
     return (localStoredStock = stockPrice
       .findOne({
-        where: { symbol: stock.ticker },
+        where: { symbol: stock.symbol },
       })
       .then((localStoredStock) => {
         //console.log("localStoredStock: ", localStoredStock);
         const responceStock = {
-          symbol: stock.ticker,
+          symbol: stock.symbol,
           price: localStoredStock.price,
           quantity: stock.amount,
         };
@@ -81,7 +81,7 @@ router.post("/purchase", async (req, res) => {
       User.save();
       const newUserStock = {
         user_id: User.id,
-        ticker: Stock.symbol,
+        symbol: Stock.symbol,
         amount: amount,
       };
       userStocks.create(newUserStock);
@@ -116,7 +116,7 @@ router.post("/purchase", async (req, res) => {
       //add newAmount to existing stock
       userStocks.update(
         { amount: newAmount },
-        { where: { ticker: Stock.symbol, user_id: User.id } }
+        { where: { symbol: Stock.symbol, user_id: User.id } }
       );
       console.log("newAmount: ", newAmount);
       return true;
@@ -141,20 +141,20 @@ router.post("/purchase", async (req, res) => {
   //   }
   // })
 
-  async function getInfo({ id, ticker }) {
+  async function getInfo({ id, symbol }) {
     //console.log('REEEEEEEEEEEESSSSSSSSSSSS0', res._header)
     const User = await user.findOne({ where: { id: id } });
     //console.log('User', User)
     //console.log('REEEEEEEEEEEESSSSSSSSSSSS1', res._header)
-    const Stock = await stocks.findOne({ where: { symbol: ticker } }); //, raw: true
+    const Stock = await stocks.findOne({ where: { symbol: symbol } }); //, raw: true
     //console.log('Stock', Stock)
     //console.log('REEEEEEEEEEEESSSSSSSSSSSS2', res._header)
     const userStock = await userStocks.findOne({
-      where: { ticker: ticker, user_id: id },
+      where: { symbol: symbol, user_id: id },
     });
     //console.log('userStock', userStock)
     //console.log('REEEEEEEEEEEESSSSSSSSSSSS3', res._header)
-    const StockPrice = await stockPrice.findOne({ where: { symbol: ticker } });
+    const StockPrice = await stockPrice.findOne({ where: { symbol: symbol } });
     //console.log('StockPrice', StockPrice)
     //console.log('FUCK you headers', User, 'STOOOOOCK', Stock, 'USERSTOOOOOK', userStock, 'STOCKPRIIIIIIICE', StockPrice);
 
@@ -168,7 +168,7 @@ router.post("/purchase", async (req, res) => {
     }
   }
 
-  const value = await getInfo({ id, ticker, amount });
+  const value = await getInfo({ id, symbol, amount });
   if (value) {
     //res.setstatus(200).send("success");
     console.log("RES final", res._header);
@@ -178,7 +178,7 @@ router.post("/purchase", async (req, res) => {
     console.log("FAIL final", res._header);
     res.send("fail");
   }
-  //console.log('get info: ',await getInfo({ id, ticker, amount }));
+  //console.log('get info: ',await getInfo({ id, symbol, amount }));
 });
 
 module.exports = router;

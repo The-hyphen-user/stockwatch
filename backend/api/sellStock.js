@@ -10,7 +10,7 @@ const userStocks = require("../models/userStocks");
 const finnhub = require("finnhub");
 
 router.post("/sell", async (req, res) => {
-  const { id, ticker } = req.body;
+  const { id, symbol } = req.body;
   const amount = Number(req.body.amount);
 
   const sellStock = async ({ User, Stock, userStock, StockPrice, amount }) => {
@@ -22,13 +22,13 @@ router.post("/sell", async (req, res) => {
     return true;
   };
 
-  async function getInfo({ id, ticker }) {
+  async function getInfo({ id, symbol }) {
     const User = await user.findOne({ where: { id: id } });
-    const Stock = await stocks.findOne({ where: { symbol: ticker } }); //, raw: true
+    const Stock = await stocks.findOne({ where: { symbol: symbol } }); //, raw: true
     const userStock = await userStocks.findOne({
-      where: { ticker: ticker, user_id: id },
+      where: { symbol: symbol, user_id: id },
     });
-    const StockPrice = await stockPrice.findOne({ where: { symbol: ticker } });
+    const StockPrice = await stockPrice.findOne({ where: { symbol: symbol } });
     if (User && Stock && userStock && StockPrice) {
       if (userStock.amount >= amount) {
         return sellStock({ User, Stock, userStock, StockPrice, amount });
@@ -39,7 +39,7 @@ router.post("/sell", async (req, res) => {
       res.send("You don't have enough stock to sell");
     }
   }
-  const success = await getInfo({ id, ticker });
+  const success = await getInfo({ id, symbol });
   if (success) {
     res.send("success");
   } else {

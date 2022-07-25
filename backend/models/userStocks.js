@@ -10,7 +10,7 @@ const userStocks = sequelize.define(
       primaryKey: true,
       allowNull: false,
     },
-    ticker: {
+    symbol: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,

@@ -8,6 +8,7 @@ const stockPrice = require("../models/stockPrice");
 const moment = require("moment");
 const dotenv = require("dotenv").config();
 const finnhub = require("finnhub");
+const stocks = require("../models/stocks");
 
 const env = process.env.FINNHUB_API_key;
 
@@ -22,7 +23,7 @@ router.get("/user:id", async (req, res) => {
 
   const getData = (stock) => {
     const localStoredStock = stockPrice.findAll({
-      where: { symbol: stock.ticker },
+      where: { symbol: stock.symbol },
     });
     if (localStoredStock) {
       //has local price?
@@ -43,12 +44,12 @@ router.get("/user:id", async (req, res) => {
 
   const getStockFromFinnhub = (stock) => {
     //console.log("too old data: ", stock);
-    finnhubClient.quote(stock.ticker, (error, data, response) => {
+    finnhubClient.quote(stock.symbol, (error, data, response) => {
       //console.log(data);
       //async stockPrice.update(//can i async here for performance?
-      stockPrice.update({ price: data.c }, { where: { symbol: stock.ticker } });
+      stockPrice.update({ price: data.c }, { where: { symbol: stock.symbol } });
       const responceStock = {
-        symbol: stock.ticker,
+        symbol: stock.symbol,
         price: data.c,
         quantity: stock.amount,
       };
@@ -59,17 +60,26 @@ router.get("/user:id", async (req, res) => {
     //console.log("stock is recent enough: ", stock);
     return (localStoredStock = stockPrice
       .findOne({
-        where: { symbol: stock.ticker },
+        where: { symbol: stock.symbol },
       })
       .then((localStoredStock) => {
         //console.log("localStoredStock: ", localStoredStock);
         const responceStock = {
-          symbol: stock.ticker,
+          symbol: stock.symbol,
           price: localStoredStock.price,
           quantity: stock.amount,
         };
         return responceStock;
-      }));
+      }).then((responceStock) => {
+        //add the description to responce stock taken from stocks
+        return stocks.findOne({
+          where: { symbol: responceStock.symbol },
+        }).then((stock) => {
+          responceStock.description = stock.description;
+          return responceStock;
+        })
+      })
+      );
   };
 
   const calcWealth = (stocks, balance) => {
