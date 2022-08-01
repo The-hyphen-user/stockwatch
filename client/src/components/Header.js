@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../App.css'
 import {
     Routes,
@@ -12,11 +12,40 @@ import Signup from './Signup';
 import User from './User'
 import Home from './Home'
 import Logout from './Logout';
+import {useState} from 'react';
 
 
 
 
 const Header = () => {
+
+    const [token, setToken] = useState(null);
+
+
+
+    const checkToken = () => {
+        console.log("checkToken");
+        const token = localStorage.getItem('token');
+        if (token) {
+            setToken(token);
+        } else {
+            setToken(null);
+        }
+    }
+
+
+    //window.addEventListener("storage", checkToken);
+    useEffect(() => {
+        window.addEventListener('storage', (e) => {
+            // ...
+            checkToken();
+            console.log('listener: ', e);
+          });
+    }, [])
+
+    
+
+
 
 
     return (
@@ -26,6 +55,11 @@ const Header = () => {
                     <title>Stock watch</title>
                     <Link to={'/'} style={{ textDecoration: 'none' }}><button className='Nav-Home-btn'>Stock Watch</button></Link>
                 </div>
+                {token ? 
+                <div>token</div>
+                :
+                <div>no token</div>
+                }
                 <div>
                     <Link to={'/login'} style={{ textDecoration: 'none' }}>
                         <button className='btn'>Log in</button>
@@ -33,9 +67,11 @@ const Header = () => {
                     <Link to={'/signup'} style={{ textDecoration: 'none' }}>
                         <button className='btn'>Sign up</button>
                     </Link>
+
                     <Link to={'/user'} style={{ textDecoration: 'none' }}>
                         <button className='btn'>User</button>
                     </Link>
+
                     <Link to={'/about'} style={{ textDecoration: 'none' }}>
                         <button className='btn'>About</button>
                     </Link>

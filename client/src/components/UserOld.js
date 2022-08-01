@@ -23,8 +23,8 @@ const User = () => {
   const [user, SetUser] = useState([])
   const [stocks, setStocks] = useState([])
   const [fakeStocks, setFakeStocks] = useState([
-    { user_id: 2, symbol: 'AAPL', amount: 10, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' },
-    { user_id: 2, symbol: 'GOOG', amount: 1, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' }
+    { id: 2, symbol: 'AAPL', amount: 10, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' },
+    { id: 2, symbol: 'GOOG', amount: 1, createdAt: '2022-07-12T20:15:35.000Z', updatedAt: '2022-07-12T20:15:35.000Z' }
   ])
 
 
@@ -195,7 +195,7 @@ export default User
 
           <ul>
             {fakeStocks.map((post) =>
-              <li key={post.user_id}>
+              <li key={post.id}>
                 {post.symbol}
               </li>
             )}

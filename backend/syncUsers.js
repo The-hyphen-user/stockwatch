@@ -10,7 +10,7 @@ const userSync = () => {
     .then(() => {
       console.log("sync sucessful");
       const newUser = user.build({
-        username: "fred",
+        username: "-bot-fred",
         email: "fred@email.com",
         balance: 10000,
         wealth: 10000.00,
@@ -22,7 +22,7 @@ const userSync = () => {
     })
     .then(() => {
       const newUser2 = user.build({
-        username: "dan",
+        username: "-bot-dan",
         email: "dan@email.com",
         balance: 10000,
         wealth: 10000.00,
@@ -34,7 +34,7 @@ const userSync = () => {
     })
     .then(() => {
       const newUser3 = user.build({
-        username: "bob",
+        username: "-bot-bob",
         email: "bob@email.com",
         balance: 10000,
         wealth: 10000.00,

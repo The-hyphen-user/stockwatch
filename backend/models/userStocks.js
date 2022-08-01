@@ -5,7 +5,7 @@ const { DataTypes } = Sequelize;
 const userStocks = sequelize.define(
   "userStocks",
   {
-    user_id: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,

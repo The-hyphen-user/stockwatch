@@ -27,40 +27,42 @@ const Stock = ({ symbol, description, quantity, price, sellStock }) => {
   const sell = () => {
     sellStock(sellAmount, symbol);
   };
-  if (quantity!== 0 ) {
-  return (
-    <div className="center">
-      <div className="stock">
-        <h3>
-        {quantity}{'  '}{symbol} {description}{" "}
-        </h3>
-        {price ? (
+  if (quantity !== 0) {
+    return (
+      <div className="center">
+        <div className="stock">
           <h3>
-            {"$"}
-            {price}
-            {" Total: "}
-            {total}
+            {quantity}
+            {"  "}
+            {symbol} {description}{" "}
           </h3>
-        ) : (
-          <div></div>
-        )}
+          {price ? (
+            <h3>
+              {"$"}
+              {price}
+              {" Total: "}
+              {total}
+            </h3>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div className="sell-title">sell Stock</div>
+        <input
+          className="stock-input"
+          type="number"
+          min="0"
+          step="1"
+          max={quantity}
+          value={sellAmount}
+          onChange={(e) => changeSellAmount(e)}
+        />
+        <button className="sell-btn" onClick={() => sell()}>
+          Sell
+        </button>
       </div>
-      <div className="sell-title">sell Stock</div>
-      <input
-        className="stock-input"
-        type="number"
-        min="0"
-        step="1"
-        max={quantity}
-        value={sellAmount}
-        onChange={(e) => changeSellAmount(e)}
-      />
-      <button className="sell-btn" onClick={() => sell()}>
-        Sell
-      </button>
-    </div>
-  );
-        }
+    );
+  }
 };
 
 export default Stock;

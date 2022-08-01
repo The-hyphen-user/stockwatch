@@ -26,7 +26,7 @@ router.post("/sell", async (req, res) => {
     const User = await user.findOne({ where: { id: id } });
     const Stock = await stocks.findOne({ where: { symbol: symbol } }); //, raw: true
     const userStock = await userStocks.findOne({
-      where: { symbol: symbol, user_id: id },
+      where: { symbol: symbol, id: id },
     });
     const StockPrice = await stockPrice.findOne({ where: { symbol: symbol } });
     if (User && Stock && userStock && StockPrice) {

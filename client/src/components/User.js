@@ -6,9 +6,12 @@ import Stock from "./Stock";
 import StockLookup from "./StockLookup";
 import Balance from "./Balance";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
+
+
 
 const User = () => {
-  const [bearerToken, setBearerToken] = useState(["Bearer missing-token-info"]);
+  const [bearerToken, setBearerToken] = useState('');
   const [token, setToken] = useState([]);
   const [username, SetUsername] = useState("");
   const [user, SetUser] = useState([]);
@@ -23,16 +26,18 @@ const User = () => {
   const [privacy, setPrivacy] = useState(false);
   const [wealth, setWealth] = useState(0);
 
+let navigate = useNavigate();
+
   const [fakeStocks, setFakeStocks] = useState([
     {
-      user_id: 2,
+      id: 2,
       symbol: "AAPL",
       amount: 999,
       createdAt: "2022-07-12T20:15:35.000Z",
       updatedAt: "2022-07-12T20:15:35.000Z",
     },
     {
-      user_id: 2,
+      id: 2,
       symbol: "GOOG",
       amount: 999,
       createdAt: "2022-07-12T20:15:35.000Z",
@@ -53,6 +58,8 @@ const User = () => {
     const getUserStocks = function () {
       const bearerToken = JSON.parse(localStorage.getItem("token"));
       console.log("stocks bearerToken: ", bearerToken);
+      if (bearerToken) {
+      setBearerToken(bearerToken);
       const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
       console.log("id: ", id);
       axios
@@ -74,6 +81,7 @@ const User = () => {
           //getBalance();
         });
     };
+  }
     const getBalance = function () {
       const balance = "/balance";
 
@@ -245,6 +253,9 @@ const User = () => {
       });
   };
 
+  if (bearerToken) {
+
+
   return (
     <div>
       <br />
@@ -340,6 +351,13 @@ const User = () => {
       </div>
     </div>
   );
+}else {
+  return (
+  // setTimeout(() => {
+    navigate("/login", { replace: true })
+    // }, 1500)
+  )
+}
 };
 
 export default User;

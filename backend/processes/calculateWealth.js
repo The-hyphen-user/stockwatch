@@ -17,7 +17,7 @@ const calculateWealth = async () => {
       var  wealth = user.balance;
       console.log("user.balance: ", user.balance);
       const UserStocks = await userStocks.findAll({
-        where: { user_id: user.id },
+        where: { id: user.id },
         });
         for (let UserStock of UserStocks) {
           const StockPrice = await stockPrice.findOne({

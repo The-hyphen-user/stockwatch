@@ -95,7 +95,7 @@ router.get("/user:id", async (req, res) => {
 
 
   const User = await user.findOne({ where: { id: id } });
-  const Stocks = await userStocks.findAll({ where: { user_id: id } }); //, raw: true
+  const Stocks = await userStocks.findAll({ where: { id: id } }); //, raw: true
   if (Stocks) {
     Stocks.map((stock) => {
       promises.push(getData(stock));

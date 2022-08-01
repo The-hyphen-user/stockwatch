@@ -19,7 +19,14 @@ app.use("/", routes);
 
 
 //needs to be turned into a schedueled calls along with split chacking
-const {calculateWealth} = require("./processes/calculateWealth");
+//const {calculateWealth} = require("./processes/calculateWealth");
+//const {calculateSplits} = require("./processes/calculateSplits");
+
+
+//const cal = require("./processes/calculateSplits");
+//const time = require("./processes/time");
+
+
 //calculateWealth();
 
 const port = Number(process.env.PORT || 5000);

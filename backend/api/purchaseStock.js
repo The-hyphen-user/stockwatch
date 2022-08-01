@@ -80,7 +80,7 @@ router.post("/purchase", async (req, res) => {
       User.balance -= StockPrice.price * amount;
       User.save();
       const newUserStock = {
-        user_id: User.id,
+        id: User.id,
         symbol: Stock.symbol,
         amount: amount,
       };
@@ -116,7 +116,7 @@ router.post("/purchase", async (req, res) => {
       //add newAmount to existing stock
       userStocks.update(
         { amount: newAmount },
-        { where: { symbol: Stock.symbol, user_id: User.id } }
+        { where: { symbol: Stock.symbol, id: User.id } }
       );
       console.log("newAmount: ", newAmount);
       return true;
@@ -150,7 +150,7 @@ router.post("/purchase", async (req, res) => {
     //console.log('Stock', Stock)
     //console.log('REEEEEEEEEEEESSSSSSSSSSSS2', res._header)
     const userStock = await userStocks.findOne({
-      where: { symbol: symbol, user_id: id },
+      where: { symbol: symbol, id: id },
     });
     //console.log('userStock', userStock)
     //console.log('REEEEEEEEEEEESSSSSSSSSSSS3', res._header)
