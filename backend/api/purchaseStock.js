@@ -76,8 +76,8 @@ router.post("/purchase", async (req, res) => {
     //console.log("purchaseStock: ", Stock, "User: ", User, "amount: ", amount);
     //stock = {symbol, price, quantity}//useratock
     //User = {id, username, balance}
-    if (User.balance >= StockPrice.price * amount) {
-      User.balance -= StockPrice.price * amount;
+    if (User.balance >= StockPrice.price * amount + 1) {
+      User.balance -= StockPrice.price * amount + 1;
       User.save();
       const newUserStock = {
         id: User.id,
@@ -109,8 +109,8 @@ router.post("/purchase", async (req, res) => {
       "amount",
       amount
     );
-    if (User.balance >= StockPrice.price * amount) {
-      User.balance -= StockPrice.price * amount;
+    if (User.balance >= StockPrice.price * amount + 1) {
+      User.balance -= StockPrice.price * amount + 1;
       User.save();
       const newAmount = userStock.amount + amount;
       //add newAmount to existing stock
@@ -122,25 +122,6 @@ router.post("/purchase", async (req, res) => {
       return true;
     }
   };
-
-  // Promise.all([
-  //   user.findOne({ where: { id: id } }),
-  //   userStocks.findAll({ where: { ticker: ticker, id:id } }),
-  //   stocks.findOne({ where: { ticker: ticker } }),
-  // ]).then(([User, userStock, stock]) => {
-  //   if (User && stock && !userStock) {
-  //     purchaseStock({ User, stock, amount });
-  //   } else if (User && stock && userStock) {
-  //     purchaseMoreStock({ User, stock, userStock, amount });
-  //   }
-  // }).then((success) => {
-  //   if (success) {
-  //     res.send("success");
-  //   } else {
-  //     res.send("fail");
-  //   }
-  // })
-
   async function getInfo({ id, symbol }) {
     //console.log('REEEEEEEEEEEESSSSSSSSSSSS0', res._header)
     const User = await user.findOne({ where: { id: id } });
@@ -182,62 +163,3 @@ router.post("/purchase", async (req, res) => {
 });
 
 module.exports = router;
-
-/****
- * 
-  Promise.all([
-    user.findOne({ where: { id: id } }),
-    userStocks.findAll({ where: { ticker: ticker, id:id } }),
-    stocks.findOne({ where: { ticker: ticker } }),
-  ]).then(([User, userStock, stock]) => {
-    if (User && stock && !userStock) {
-      purchaseStock({ User, stock, amount });
-    } else if (User && stock && userStock) {
-      purchaseMoreStock({ User, stock, userStock, amount });
-    }
-  }).then((success) => {
-    if (success) {
-      res.send("success");
-    } else {
-      res.send("fail");
-    }
-  })
-
-})
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
-  // const User = await user.findOne({ where: { id: id } })
-  // const Stock = await userStocks.findOne({ where: { user_id: id } }); //, raw: true
-  if (Stock && User) {
-    // getData(Stock).then((stock) => {
-    //   purchaseStock(stock, User);
-    // })
-    console.log("stock: ", Stock, "User: ", User);
-    // const stock = await getData(Stock);
-    if (stock) {
-      console.log("stock: ", stock, amount);
-    // const a = await purchaseStock(stock, User, amount).then((a) => {
-      res.json(a);
-    })
-    console.log("a.amount: ", a);
-    }
-  } else if (!Stock && User) {
-    console.log("no stock");
-  }
-    console.log("no stock and user");
-  }).then(() => {
-    res.json("success");
-  })
-  .catch((err) => {
-    console.log("err: ", err);
-    res.json("error");
-  })
-}); 
-
- */

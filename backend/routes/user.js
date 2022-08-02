@@ -12,6 +12,7 @@ const firstLoginCheck = require("../middleware/firstLogincheck");
 const sellStock = require("../api/sellStock");
 const accountprivacy = require("../api/accountPrivacy");
 const highscores = require("../api/highscores");
+const searchForStocks = require("../api/searchForStocks");
 
 //router.use('/api', api)
 router.post("/api/signup", signup);
@@ -30,5 +31,6 @@ router.post("/purchase", purchaseStock);
 router.post("/sell", sellStock);
 router.post("/privacy:user", auth2(), accountprivacy);
 router.get("/highscores:count", highscores);
+router.get('/search:query/:queryAmount', searchForStocks);
 
 module.exports = router;

@@ -37,12 +37,15 @@ List of current things to do:
 incurporate search for description of stocks 
 ex. so you can find apple stock by searching apple
 
-impletement stock splitting check so you dont lose stock when a stock splits
+v/ impletement stock splitting check so you dont lose stock when a stock splits
 
-implement calulation for overall wealth
+v/ implement calulation for overall wealth
 possibly save past welath chart for graph  up and downs in overall wealth
 add ability to compare yourself with others on the website
 add high scores to see top performers
 add ability to compare yourself with famouse investors/investor groups
 
+
+possible things added in the future:
 switch login token into redux global state
+add crypto coins option
