@@ -2,61 +2,50 @@
 
 ##  how to get the project started 
 ### yarn stalls
-cd into /backend and $yarn (npm install works too, no lock file reqs atm)
+cd into /backend and $yarn (npm install works too, no lock file reqs atm)  
 cd into /client and $yarn (npm install works too, no lock file reqs atm)
 
 ### create database
 CREATE a mysql database
 
 ### link database in .env
-in the /backend directory
-create a .env file and fill in the needed variables 
-an example .env file is already in the /backend directory named .example.env
-DB variables come from your mysql server
-to get a funnhub api you need to go to https://finnhub.io/ and sign up for free i suggest using the sandbox api, if you use the free api everything should work with except for checking for stock splits in /backend/processes/calculateSplits.js
-the jwt secret can be a random string you choose
+in the /backend directory  
+create a .env file and fill in the needed variables   
+an example .env file is already in the /backend directory named .example.env  
+DB variables come from your mysql server  
+to get a funnhub api you need to go to https://finnhub.io/ and sign up for free i suggest using the sandbox api, if you use the free api everything should work with except for checking for stock splits in /backend/processes/calculateSplits.js  
+the jwt secret can be a random string you choose  
 
 
 ### after your database is created and online sync some starter tables/values
-cd into /backend and $node syncStockPrice.js
-cd into /backend and $node syncStocks.js
-cd into /backend and $node syncUsers.js
-cd into /backend and $node syncUserStocks.js
+cd into /backend and $node syncStockPrice.js  
+cd into /backend and $node syncStocks.js  
+cd into /backend and $node syncUsers.js  
+cd into /backend and $node syncUserStocks.js  
 
 
 ### starting the server and webpage
-*option1:*
-cd into /backend and $yarn dev
-in a second terminal
-cd into /client and $yarn start
+*option1:*  
+cd into /backend and $yarn dev  
+in a second terminal  
+cd into /client and $yarn start  
 
 *option2*
-in the base directory
-$yarn
-then
-$yarn dev
+in the base directory  
+$yarn  
+then  
+$yarn dev  
 
 
-Welcome to Market watch.
+# Welcome to Market watch.
 the goal of this site is to enable people to Practice stock trading with virtual money.
 
 
-1) set starting capitol(fake money)
-2)'purchase' stocks at the current value
-3) attempt to buy low and sell high
-4) compare yourself against investing firms and public investors
+1) set starting capitol(fake money)  
+2)'purchase' stocks at the current value  
+3) attempt to buy low and sell high  
+4) compare yourself against investing firms and public investors  
 
-full stack web app using react front end express back and mysql for database and pulling data from from the funnhub api
-Steps
-
-install instuctions:
-cd into back and run yarn
-cd into client run yarn
-and .env files into backend folder (.example.env should give you the variables that need to be filled)
-
-run instructions
-run yarn both in main folder or 
-run yarn start in client and yarn dev in backend
 
 
 if you set your public, you will be placed on the leaderboard
@@ -67,7 +56,6 @@ future goals
 
 
 join with a group ( everyone starts at the same time with the same capitol. the group with have a ranking to see who the top traders are. the group can compare members against each other even if your account is set to private)
-
 
 
 List of current things to do:
