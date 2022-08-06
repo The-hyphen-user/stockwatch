@@ -124,3 +124,12 @@ justify-content: center;
   justify-content: space-around;
   align-items: baseline;
 }
+
+.stocck-button{
+  background-color: rgb(172, 82, 82);
+  border:rgb(126, 126, 138) 2px solid;
+  width: 3%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-left: .5%;
+}

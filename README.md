@@ -42,7 +42,7 @@ the goal of this site is to enable people to Practice stock trading with virtual
 
 
 1) set starting capitol(fake money)  
-2)'purchase' stocks at the current value  
+2) purchase' stocks at the current value  
 3) attempt to buy low and sell high  
 4) compare yourself against investing firms and public investors  
 
@@ -52,13 +52,11 @@ if you set your public, you will be placed on the leaderboard
 if you keep your profile private you will see be able to compare your account to other, and it will keep your account hidden to others
 
 
-future goals
-
-
+### future goals
 join with a group ( everyone starts at the same time with the same capitol. the group with have a ranking to see who the top traders are. the group can compare members against each other even if your account is set to private)
 
 
-List of current things to do:
+### List of current things to do:
 incurporate search for description of stocks 
 ex. so you can find apple stock by searching apple
 

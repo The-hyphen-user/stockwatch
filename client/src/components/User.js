@@ -7,6 +7,7 @@ import StockLookup from "./StockLookup";
 import Balance from "./Balance";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
+import SearchResults from "./SearchResults";
 
 const User = () => {
   const [bearerToken, setBearerToken] = useState("");
@@ -18,7 +19,7 @@ const User = () => {
   const [lookedUpStockBySymbol, setLookedUpStockBySymbol] = useState([]);
   const [lookedUpStocksByString, setLookedUpStocksByString] = useState([]);
   const [showSingleStock, setShowSingleStock] = useState(true);
-  const [query, setQuery] = useState("AAPL");
+  const [query, setQuery] = useState("apple");
   const [maximumPurchasable, setMaximumPurchasable] = useState(999999);
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const [purchasePrice, setPurchasePrice] = useState(0);
@@ -152,7 +153,9 @@ const User = () => {
   };
 
   const searchForStockBySymbol = async (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     console.log("searching for stock: ", query);
     axios
       .get(`${baseURL}:${PORT}${extensionURL4}${query}`)
@@ -165,6 +168,7 @@ const User = () => {
       .then((price) => {
         calculatePurchaseAmount(price);
         console.log("price: ", price);
+        setShowSingleStock(true);
       })
       .catch((err) => {
         console.log("error: ", err);
@@ -183,7 +187,8 @@ const User = () => {
         .get(`${baseURL}:${PORT}/search${trimmedQuery}/${queryAmount}`)
         .then((res) => {
           console.log("searching for stock!!!: ", res.data);
-          setLookedUpStockBySymbol(res.data);
+          setLookedUpStocksByString(res.data);
+          setShowSingleStock(false);
         });
     } else {
       console.log("missing query");
@@ -269,6 +274,13 @@ const User = () => {
         setRefresh(true);
       });
   };
+  const selectedStock = (symbol) => {
+    console.log("selected stock: ", symbol);
+    setQuery(symbol);
+    console.log("query: ", query);
+    setShowSingleStock(true);
+    searchForStockBySymbol();
+  };
 
   if (bearerToken) {
     return (
@@ -304,34 +316,17 @@ const User = () => {
         <div>
           {lookedUpStockBySymbol && showSingleStock ? (
             <div>
-              <input
-                type="number"
-                min="0"
-                step="1"
-                value={purchaseAmount}
-                onChange={(e) => calculatePurchaseAmount(e)}
-              />{" "}
+              <input type="number" min="0" step="1" value={purchaseAmount} onChange={(e) => calculatePurchaseAmount(e)}/>{" "}
               <button onClick={purcaseStock}>Purchase</button>
-              {purchasePrice ? (
-                <div>
-                  <p>
-                    You will purchase {purchaseAmount} stocks for{" "}
-                    {(purchasePrice + 1).toLocaleString()}
-                    {" includes a $1 purchase fee."}
-                  </p>
-                </div>
-              ) : (
-                <div></div>
-              )}
-              {lookedUpStocksByString && !showSingleStock ? (
-                <div></div>
-              ) : (
-                <div></div>
-              )}
+              {purchasePrice ? ( <div> <p>  You will purchase {purchaseAmount} stocks for{" "}  {(purchasePrice + 1).toLocaleString()}  {" includes a $1 purchase fee."} </p></div>
+              ) : (<div></div>)}
             </div>
-          ) : (
-            <div></div>
-          )}
+          ) : ( <div></div> )}
+          {lookedUpStocksByString && !showSingleStock ? (
+            <div>
+              <SearchResults results={lookedUpStocksByString}  selectedStock = {selectedStock}/>
+            </div>
+          ) : null}
         </div>
 
         <div>
@@ -383,3 +378,14 @@ const User = () => {
 };
 
 export default User;
+
+
+
+/**
+ * 
+ * {lookedUpStocksByString && !showSingleStock ? (
+                <div></div>
+              ) : (
+                <div></div>
+              )}
+ */
