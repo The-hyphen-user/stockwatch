@@ -19,9 +19,14 @@ the jwt secret can be a random string you choose
 
 ### after your database is created and online sync some starter tables/values
 cd into /backend and $node syncStockPrice.js  
-cd into /backend and $node syncStocks.js  
 cd into /backend and $node syncUsers.js  
 cd into /backend and $node syncUserStocks.js  
+
+
+cd into /backend and $node syncStocks.js  
+*this will give slower computers a timeout issue*  
+to avoid this use python file syncStocks.py in /python directory  
+to use the python DB insert you will need to pip install mysql-connector and pip install python-dotenv
 
 
 ### starting the server and webpage
