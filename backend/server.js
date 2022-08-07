@@ -19,7 +19,7 @@ app.use("/", routes);
 
 
 //needs to be turned into a schedueled calls along with split chacking
-//const {calculateWealth} = require("./processes/calculateWealth");
+//const {calculateWealth} = require("./processes/calculateWealth");//will only work once a day
 //const {calculateSplits} = require("./processes/calculateSplits");
 
 
