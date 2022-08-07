@@ -274,12 +274,34 @@ const User = () => {
         setRefresh(true);
       });
   };
+
   const selectedStock = (symbol) => {
     console.log("selected stock: ", symbol);
     setQuery(symbol);
     console.log("query: ", query);
     setShowSingleStock(true);
     searchForStockBySymbol();
+    axios
+      .get(`${baseURL}:${PORT}${extensionURL4}${symbol}`)
+      .then((res) => {
+        console.log("searching for stock!!!: ", res.data);
+        setLookedUpStockBySymbol(res.data);
+        calculateMaximumPurchasable(res.data.price, balance);
+        return res.data.price;
+      })
+      .then((price) => {
+        calculatePurchaseAmount(price);
+        console.log("price: ", price);
+        setShowSingleStock(true);
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+        if (err.response.status === 404) {
+          setLookedUpStockBySymbol({ symbol: "Stock not found" });
+        }
+      });
+
+    
   };
 
   if (bearerToken) {
@@ -290,7 +312,7 @@ const User = () => {
         <br />
         <div className="privacy-container">
           <div className="privacy">
-            <label>Privacy: </label>
+            <label>Make account public: </label>
             <input
               type="checkbox"
               checked={privacy}

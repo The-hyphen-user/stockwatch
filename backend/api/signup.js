@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 dotenv.config();
 
-router.post("/signup", async (req, res) => {
+router.post("/api/signup", async (req, res) => {
   const { username, email, password } = req.body; //needs validation
 
   console.log("submitting, Email: ", email);
@@ -24,6 +24,8 @@ router.post("/signup", async (req, res) => {
         username,
         email,
         balance: 10000,
+        wealth: 10000,
+        privacy: true,
         password: hashedPassword,
       });
       if (!newUser) {

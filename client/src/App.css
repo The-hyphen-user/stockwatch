@@ -133,3 +133,25 @@ justify-content: center;
   margin-bottom: 1%;
   margin-left: .5%;
 }
+
+.homepage-p{
+  text-align: center;
+  font-size: 1.5em;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-style: italic;
+  font-variant: small-caps;
+  width: 60%;
+  justify-content: center;
+
+}
+.homepage-p-container {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: baseline;
+  
+}
