@@ -8,7 +8,11 @@ import Balance from "./Balance";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import SearchResults from "./SearchResults";
+//import Box from "@material-ui/core/Box";
+import { Grid, Box, Paper } from "@material-ui/core";
 
+//Consolas, 'Courier New', monospace
+//Consolas, 'Courier New', monospace
 const User = () => {
   const [bearerToken, setBearerToken] = useState("");
   const [token, setToken] = useState([]);
@@ -84,6 +88,7 @@ const User = () => {
           });
       }
     };
+
     // const getBalance = function () {
     //   const balance = "/balance";
 
@@ -300,8 +305,6 @@ const User = () => {
           setLookedUpStockBySymbol({ symbol: "Stock not found" });
         }
       });
-
-    
   };
 
   if (bearerToken) {
@@ -338,51 +341,89 @@ const User = () => {
         <div>
           {lookedUpStockBySymbol && showSingleStock ? (
             <div>
-              <input type="number" min="0" step="1" value={purchaseAmount} onChange={(e) => calculatePurchaseAmount(e)}/>{" "}
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={purchaseAmount}
+                onChange={(e) => calculatePurchaseAmount(e)}
+              />{" "}
               <button onClick={purcaseStock}>Purchase</button>
-              {purchasePrice ? ( <div> <p>  You will purchase {purchaseAmount} stocks for{" "}  {(purchasePrice + 1).toLocaleString()}  {" includes a $1 purchase fee."} </p></div>
-              ) : (<div></div>)}
+              {purchasePrice ? (
+                <div>
+                  {" "}
+                  <p>
+                    {" "}
+                    You will purchase {purchaseAmount} stocks for{" "}
+                    {(purchasePrice + 1).toLocaleString()}{" "}
+                    {" includes a $1 purchase fee."}{" "}
+                  </p>
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
-          ) : ( <div></div> )}
+          ) : (
+            <div></div>
+          )}
           {lookedUpStocksByString && !showSingleStock ? (
             <div>
-              <SearchResults results={lookedUpStocksByString}  selectedStock = {selectedStock}/>
+              <SearchResults
+                results={lookedUpStocksByString}
+                selectedStock={selectedStock}
+              />
             </div>
           ) : null}
         </div>
 
         <div>
           {bearerToken ? (
-            <div>
+            <div className="border-orange">
               welcome {username} lets see how your stocks are doing today
               <br />
               <Balance balance={balance} />
               <br />
               {"Wealth: " + wealth.toLocaleString()}
               <br />
-              <>
-                <div>
+              <br />
+              
+              <br />
+              <div className="stock-container-green">
+                <div className="stock-container-green">
                   {stocks ? (
-                    <div>
-                      {stocks.map((stock, index) => (
-                        <Stock
-                          key={index}
-                          symbol={stock.symbol}
-                          quantity={stock.quantity}
-                          price={stock.price}
-                          description={stock.description}
-                          sellStock={sellStock}
-                        />
-                      ))}
+                    <div className="border-red">
+                      <Grid
+                        container
+                        spacing={2}
+                        alignItems="center"
+                        justifyContent="center"
+                        centered
+                      >
+                        {stocks.map((stock, index) => (
+                          <Grid item sm={12} key={index}>
+                            <Paper elevation={8}
+                            >
+                              <Stock
+                                key={index}
+                                symbol={stock.symbol}
+                                quantity={stock.quantity}
+                                price={stock.price}
+                                description={stock.description}
+                                sellStock={sellStock}
+                              />
+                            </Paper>
+                          </Grid>
+                        ))}
+                      </Grid>
                     </div>
                   ) : (
                     <div>No Stocks</div>
                   )}
                 </div>
-                {token}
-                <br />
-                {user.id} {user.username}
-              </>
+              </div>
+              {token}
+              <br />
+              {user.id} {user.username}
             </div>
           ) : (
             "error loading"
@@ -401,8 +442,6 @@ const User = () => {
 
 export default User;
 
-
-
 /**
  * 
  * {lookedUpStocksByString && !showSingleStock ? (
@@ -411,3 +450,25 @@ export default User;
                 <div></div>
               )}
  */
+
+/***
+               * 
+               * <div>
+                  {stocks ? (
+                    <div>
+                      {stocks.map((stock, index) => (
+                        <Stock
+                          key={index}
+                          symbol={stock.symbol}
+                          quantity={stock.quantity}
+                          price={stock.price}
+                          description={stock.description}
+                          sellStock={sellStock}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div>No Stocks</div>
+                  )}
+                </div>
+               */
