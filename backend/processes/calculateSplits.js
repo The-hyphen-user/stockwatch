@@ -15,6 +15,10 @@ const api_key = finnhub.ApiClient.instance.authentications["api_key"];
 api_key.apiKey = env; // Replace this
 const finnhubClient = new finnhub.DefaultApi();
 
+//should only be run once per day
+//should be run every day
+//should be run when stock market is paused
+
 const calculateSplits = async () => {
   console.log("💀starting calculateSplits");
   try {

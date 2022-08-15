@@ -7,6 +7,10 @@ const userStocks = require("../models/userStocks");
 const userRevenue = require("../models/userRevenue");
 const dotenv = require("dotenv").config();
 
+//should only be run once per day
+//should be run every day
+//should be run when stock market is paused
+
 const calculateWealth = async () => {
   try {
     const calculateUsersWealth = async (user) => {

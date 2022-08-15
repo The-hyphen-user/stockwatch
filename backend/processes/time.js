@@ -14,6 +14,8 @@ api_key.apiKey = env; // Replace this
 const finnhubClient = new finnhub.DefaultApi();
 
 
+//does not need to be run ever
+
 
 const Atime = async ()  => {
     console.log("time: ", moment.utc());
