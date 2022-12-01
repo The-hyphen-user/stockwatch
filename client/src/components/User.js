@@ -9,11 +9,37 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import SearchResults from "./SearchResults";
 //import Box from "@material-ui/core/Box";
-import { Grid, Box, Paper } from "@material-ui/core";
+import {
+  Grid,
+  Box,
+  Paper,
+  Table,
+  Button,
+  TextField,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  makeStyles,
+} from "@material-ui/core";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { purple, green } from "@material-ui/core/colors";
 
 //Consolas, 'Courier New', monospace
 //Consolas, 'Courier New', monospace
 const User = () => {
+  // const theme = createTheme({
+  //   palette: {
+  //     primary: {
+  //       main: purple[500],
+  //     },
+  //     secondary: {
+  //       main: green[500],
+  //     },
+  //   },
+  // })
+
   const [bearerToken, setBearerToken] = useState("");
   const [token, setToken] = useState([]);
   const [username, SetUsername] = useState("");
@@ -88,27 +114,6 @@ const User = () => {
           });
       }
     };
-
-    // const getBalance = function () {
-    //   const balance = "/balance";
-
-    //   console.log("checking bearer that balance");
-    //   const bearerToken = JSON.parse(localStorage.getItem("token"));
-    //   console.log("balance bearerToken: ", bearerToken);
-    //   const id = jwt_decode(bearerToken.replace("Bearer ", "")).user.id;
-    //   console.log("headers token bearerToken: ", bearerToken, "id: ", id);
-    //   axios
-    //     .get(`${baseURL}:${PORT}${extensionURL3}${id}`, {
-    //       headers: {
-    //         token: bearerToken,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log("loading that balance: ", res.data.balance);
-    //       setBalance(res.data.balance.toLocaleString());
-    //       return res.data.balance;
-    //     });
-    // };
 
     getUserStocks();
     setRefresh(false);
@@ -307,6 +312,8 @@ const User = () => {
       });
   };
 
+  const changeSellAmount = (symbol, amount) => {};
+
   if (bearerToken) {
     return (
       <div>
@@ -330,7 +337,13 @@ const User = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         ></input>
-        <button onClick={searchForStockByString}>search</button>
+        <Button
+          color="success"
+          variant="contained"
+          onClick={searchForStockByString}
+        >
+          search
+        </Button>
         <button onClick={searchForStockBySymbol}>search Symbol</button>
         <br />
         <Stock
@@ -341,14 +354,44 @@ const User = () => {
         <div>
           {lookedUpStockBySymbol && showSingleStock ? (
             <div>
-              <input
-                type="number"
-                min="0"
-                step="1"
-                value={purchaseAmount}
-                onChange={(e) => calculatePurchaseAmount(e)}
-              />{" "}
-              <button onClick={purcaseStock}>Purchase</button>
+              <Box
+                sx={{
+                  mr: 50,
+                  ml: 50,
+                  p: 5,
+                  alignContent: "stretch",
+                }}
+              >
+                <TextField
+                  variant="outlined"
+                  label="Purchase Amount"
+                  margin="auto"
+                  type="number"
+                  color="primary"
+                  min="0"
+                  step="1"
+                  value={purchaseAmount}
+                  onChange={(e) => calculatePurchaseAmount(e)}
+                />{" "}
+                <Button
+                  margin="auto"
+                  color="success"
+                  variant="contained"
+                  onClick={purcaseStock}
+                >
+                  Purchase
+                </Button>
+                <Button variant="contained" color="success">
+                  Success
+                </Button>
+              </Box>
+              <Button color="secondary">Secondary</Button>
+              <Button variant="contained" color="success">
+                Success
+              </Button>
+              <Button variant="outlined" color="error">
+                Error
+              </Button>
               {purchasePrice ? (
                 <div>
                   {" "}
@@ -388,6 +431,7 @@ const User = () => {
               <br />
               
               <br />
+              <br />
               <div className="stock-container-green">
                 <div className="stock-container-green">
                   {stocks ? (
@@ -401,8 +445,7 @@ const User = () => {
                       >
                         {stocks.map((stock, index) => (
                           <Grid item sm={12} key={index}>
-                            <Paper elevation={8}
-                            >
+                            <Paper elevation={8}>
                               <Stock
                                 key={index}
                                 symbol={stock.symbol}
@@ -472,3 +515,86 @@ export default User;
                   )}
                 </div>
                */
+
+
+/***
+ * 
+ * <Box
+                sx={{
+                  maxWidth: "80%",
+                  margin: "auto",
+                  backgroundColor: "gray",
+                }}
+              >
+                <TableContainer
+                  component={Paper}
+                  style={{
+                    backgroundColor: "rgb(172, 163, 164)",
+                    color: "white",
+                  }}
+                >
+                  <Table
+                    aria-label="simple table"
+                    sx={{
+                      width: 300,
+                      maxHeight: 800,
+                      maxWidth: 750,
+                      backgroundColor: "primary.dark",
+                      border: "1px solid black",
+                      borderRadius: "10px",
+                      borderColor: "primary.main",
+                      pr: 3,
+                      mr: 3,
+                    }}
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">Symbol</TableCell>
+                        <TableCell align="center">description</TableCell>
+                        <TableCell align="center">Price</TableCell>
+                        <TableCell align="center">Quantity</TableCell>
+                        <TableCell align="center">Total</TableCell>
+                        <TableCell align="center">Sell Stock</TableCell>
+                        <TableCell align="center">Sell Stock2</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {stocks.map((row) => (
+                        <TableRow key={row.symbol}>
+                          <TableCell align="center">{row.symbol}</TableCell>
+                          <TableCell align="center">
+                            {row.description}
+                          </TableCell>
+                          <TableCell align="center">{row.price}</TableCell>
+                          <TableCell align="center">{row.quantity}</TableCell>
+                          <TableCell align="center">
+                            {row.quantity * row.price}
+                          </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              id="outlined-basic"
+                              label="Sell #"
+                              variant="outlined"
+                              type="number"
+                              size="medium"
+                              InputProps={{
+                                inputProps: { min: 0, max: row.quantity },
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            <Button
+                              color="secondary"
+                              variant="contained"
+                              onClick={() => sellStock(row.symbol, row.amount)}
+                            >
+                              Sell
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+ */

@@ -14,13 +14,29 @@ import About from './components/About';
 import Signup from './components/Signup';
 import User from './components/User'
 import HighScores from './components/HighScores';
+import { createTheme, ThemeProvider } from '@material-ui/core'
+import { blue, green, purple,red } from '@material-ui/core/colors';
 
-
-
+const theme = createTheme ({
+  palette: {
+    primary: blue,
+    secondary:red,
+    green:green,
+    success: {
+      main: green[500],
+      background: {
+        default: green[50],
+      }
+      
+    },
+  }
+})
 
 function App() {
   return (
+
     <div className="App">
+    <ThemeProvider theme={theme}>
       <Header />
       <Routes>
             <Route path='/login' element={<Login />} />
@@ -34,6 +50,7 @@ function App() {
             
           
         </Routes>
+        </ThemeProvider>
     </div>
   );
 }

@@ -16,9 +16,13 @@ router.post("/sell", async (req, res) => {
   const sellStock = async ({ User, Stock, userStock, StockPrice, amount }) => {
     User.balance = User.balance + StockPrice.price * amount;
     User.save();
+    if (userStock.amount === amount) {
+      userStock.destroy();
+    } else {
     userStock.amount = userStock.amount - amount;
     console.log("#", userStock.amount, amount);
     userStock.save();
+    }
     return true;
   };
 

@@ -4,12 +4,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { TextField, Button } from "@material-ui/core";
+import Snackbar from "@material-ui/core";
 
 const Login = () => {
   //{signupmail, signupPassword}
 
-  const [email, setEmail] = useState("dan@email.com");
-  const [password, setPassword] = useState("password1");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [items, setItems] = useState([]);
   let navigate = useNavigate();
 
@@ -19,6 +20,9 @@ const Login = () => {
 
   const submit = (e) => {
     e.preventDefault();
+    if (email === "" || password === "") {
+      alert("Please fill in all fields");
+    }
     console.log("submitting, Email: ", email, ", password: ", password);
     axios
       .post(`${baseURL}:${PORT}${extensionURL}/login`, {
@@ -81,6 +85,7 @@ const Login = () => {
         <Button onClick={submit} variant="contained">
           Log In
         </Button>
+
       </div>
     </div>
   );
