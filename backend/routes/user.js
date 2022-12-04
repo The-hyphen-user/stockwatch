@@ -11,7 +11,7 @@ const purchaseStock = require("../api/purchaseStock");
 const firstLoginCheck = require("../middleware/firstLogincheck");
 const sellStock = require("../api/sellStock");
 const accountprivacy = require("../api/accountPrivacy");
-const highscores = require("../api/highscores");
+const highscores = require("../api/highScores");
 const searchForStocks = require("../api/searchForStocks");
 
 //router.use('/api', api)

@@ -3,7 +3,8 @@ const router = express.Router();
 const dotenv = require("dotenv").config();
 const stocks = require("../models/stocks");
 const stockPrice = require("../models/stockPrice");
-const { Op } = require("Sequelize");
+// const Sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
 
 
